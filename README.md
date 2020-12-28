@@ -8,3 +8,6 @@ This is in principle a renderer that outputs to a volumetric display.
 ## Demo of this implementation
 
 TODO;
+
+## Additional requirements for digital preview
+* [Open3D](http://www.open3d.org/docs/release/getting_started.html) `conda install -c open3d-admin open3d`
