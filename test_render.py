@@ -2,7 +2,7 @@
 # THIS IS NOT REQUIRED TO RENDER, IT'S JUST A PREVIEW
 #
 
-from scenes.growing_sphere import render_point, tick, set_palette_mode
+from scenes.torus_loading2 import render_point, tick, set_palette_mode
 
 import numpy as np
 import open3d as o3d
@@ -42,7 +42,8 @@ def xmaslight():
     global neo_pixels
     global vis
     vis = o3d.visualization.Visualizer()
-    vis.create_window()
+    # TODO: remove left to display on primary monitor
+    vis.create_window(width=1280, height=720, left=3000)
     neo_pixels = o3d.geometry.PointCloud()
     neo_pixels.points = o3d.utility.Vector3dVector(np.asarray(coords))
     neo_pixels.colors = o3d.utility.Vector3dVector(np.asarray(coords))

@@ -106,6 +106,34 @@ def transform(p: np.array, t: np.ndarray) -> np.array:
     return np.invert(t)*p
 
 
+def rotate(p: np.array, axis: np.array, theta: np.float) -> np.array:
+    """
+    Rotate around three angles
+    :param p: vec3 position
+    :param axis: unit vec3 axis to rotate around
+    :param theta: angle to rotate around axis
+    :return: vec3
+    """
+    return p*np.cos(theta)+(np.cross(axis, p)*np.sin(theta)+axis*(axis*p)*(1-np.cos(theta)))
+
+
+def normalize(v):
+    """
+    Normalize a vector
+    """
+    return v / (v**2).sum()**0.5
+
+
+def position(p, t: np.array) -> np.array:
+    """
+    Position
+    :param p: vec3 position
+    :param t: vec3 transform
+    :return: vec3
+    """
+    return p + t
+
+
 def infinite_repetition(p: np.array, c: np.array) -> np.array:
     """
     Repeat object in 3d space

@@ -62,7 +62,7 @@ def torus(p: np.array, t: np.array) -> np.float:
     :param t: vec2 size
     :return: signed distance
     """
-    q = np.array([euclidean_length(np.array(p[[x], p[z]])) - t[x], p[y]])
+    q = np.array([euclidean_length(np.array([p[x], p[z]])) - t[x], p[y]])
     return euclidean_length(q) - t[y]
 
 
@@ -78,7 +78,7 @@ def capped_torus(p: np.array, sc: np.array, ra: np.float, rb: np.float) -> np.fl
     """
     p[x] = np.abs(p[x])
     k = np.dot(np.array([p[x], p[y]]), sc) if sc[y]*p[x] > sc[x]*p[y] else euclidean_length(np.array([p[x], p[y]]))
-    return np.sqrt(np.dot(p, p) + ra*ra - 2.0*ra*k) - rb
+    return np.sqrt(np.dot(p, p) + ra**2 - 2.0*ra*k) - rb
 
 
 def infinite_cylinder(p: np.array, c: np.array) -> np.float:
