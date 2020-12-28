@@ -102,4 +102,33 @@ def plane(p: np.array, n: np.array, h: np.float) -> np.float:
     return np.dot(p, n) + h
 
 
+def bounding_box(p: np.array, s: np.array, thickness) -> np.float:
+    """
+    box with lines
+    :param p:
+    :param s:
+    :param thickness:
+    :return:
+    """
+    p = np.abs(p) - s
+    q = np.abs(p + thickness) - thickness
+    return np.minimum(np.minimum(np.array([
+        euclidean_length(np.maximum(np.array([p[x], q[y], q[z]]), 0.0)) + np.minimum(np.maximum(p[x], np.maximum(q[y], q[z])), 0.0),
+        euclidean_length(np.maximum(np.array([q[x], p[y], q[z]]), 0.0)) + np.minimum(np.maximum(q[x], np.maximum(p[y], q[z])), 0.0),
+        euclidean_length(np.maximum(np.array([q[x], q[y], p[z]]), 0.0)) + np.minimum(np.maximum(q[x], np.maximum(q[y], p[z])), 0.0)])
+    ))
+
+
+def mandelbulb(p: np.array) -> np.array:
+    """
+    TODO
+    Mandelbulb SDF
+    :param p:
+    :return:
+    """
+    pr = np.sqrt(np.dot(p, p))**8
+    po = np.arccos(p[y]/p[r]) * 8
+    pi = np.arctan(p[x]/p[z]) * 8
+
+
 
