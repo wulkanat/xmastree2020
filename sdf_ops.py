@@ -9,9 +9,9 @@ from sdf_primitives import euclidean_length
 x = 0
 y = 1
 z = 2
-r = 2
+r = 1
 g = 0
-b = 1
+b = 2
 
 # important: 'p' is called position, but is the coordinate of the current sample point. Don't try to pass a static
 # value there.
@@ -113,3 +113,19 @@ def infinite_repetition(p: np.array, c: np.array) -> np.array:
     :param c:
     :return:
     """
+    # TODO
+
+
+def evaluate_sdf(sdf: np.float) -> bool:
+    return sdf > 0.0
+
+
+def colorize(inside: np.array, outside: np.array, sdf: np.float) -> np.array:
+    """
+    Colorizes an SDF
+    :param inside: color on the inside of the shape
+    :param outside: color on the outside of the shape
+    :param sdf: the signed distance field
+    :return: color
+    """
+    return inside if sdf < 0 else outside

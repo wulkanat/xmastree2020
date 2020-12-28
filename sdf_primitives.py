@@ -7,9 +7,9 @@ import numpy as np
 x = 0
 y = 1
 z = 2
-r = 2
+r = 1
 g = 0
-b = 1
+b = 2
 
 # important: 'p' is called position, but is the coordinate of the current sample point. Don't try to pass a static
 # value there.
