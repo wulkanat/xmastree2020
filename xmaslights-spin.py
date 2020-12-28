@@ -1,15 +1,12 @@
-from scene1 import render_point, tick
-from concurrent import futures
+# TODO: to change scene just import a different one
+from scenes.growing_sphere import render_point, tick, set_palette_mode
 
 import numpy as np
 
 
 def worker(index: int):
+    # TODO: potentially conversion
     neo_pixels[index] = render_point(points[index])
-
-
-points = np.ndarray()
-neo_pixels = []
 
 
 def xmaslight():
@@ -22,7 +19,6 @@ def xmaslight():
     import board
     import neopixel
     import re
-    import math
 
     # You are welcome to add any of these:
     # import random
@@ -58,21 +54,32 @@ def xmaslight():
 
     # YOU CAN EDIT FROM HERE DOWN
 
-    global points
-    global neo_pixels
+    set_palette_mode(grb=True)
+
+    # I couldn't test this directly unfortunately...
+    # TODO: actually test it
+    global points      # this should be an np.array
+    global neo_pixels  # this should support assigning an np.array
     points = np.ndarray(coords)
     neo_pixels = pixels
 
-    # maximum parallel processes
-    workers = 40
+    iterator = range(0, 500)
+    ns_to_s = 1000000000
+    last_time = time.time_ns() / ns_to_s  # seconds
+    last_update = round(last_time)
     while True:
         tick(time.time_ns())
 
-        # process each pixel in parallel
-        with futures.ProcessPoolExecutor(max_workers=workers) as pool:
-            results = [pool.submit(render_point, i) for i in pixels]
-            futures.as_completed(results)
-            pixels.show()
+        for i in iterator:
+            worker(i)
+        pixels.show()
+
+        t = time.time_ns() / ns_to_s  # seconds
+        if last_update != round(t):
+            # print FPS to console (I got around 5000 for the sphere scene)
+            print(f"{round(60 / (t - last_time))} FPS")
+            last_update = round(t)
+        last_time = t
 
 
 # yes, I just put this at the bottom so it auto runs

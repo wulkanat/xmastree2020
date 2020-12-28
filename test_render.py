@@ -2,11 +2,13 @@
 # THIS IS NOT REQUIRED TO RENDER, IT'S JUST A PREVIEW
 #
 
-from scene1 import render_point, tick
-from concurrent import futures
+from scenes.growing_sphere import render_point, tick, set_palette_mode
 
 import numpy as np
 import open3d as o3d
+
+import time
+import re
 
 
 def worker(index: int):
@@ -14,22 +16,6 @@ def worker(index: int):
 
 
 def xmaslight():
-    # This is the code from my
-
-    # NOTE THE LEDS ARE GRB COLOUR (NOT RGB)
-
-    # Here are the libraries I am currently using:
-    import time
-    import board
-    import re
-    import math
-
-    # You are welcome to add any of these:
-    # import random
-    # import numpy
-    # import scipy
-    # import sys
-
     # If you want to have user changable values, they need to be entered from the command line
     # so import sys sys and use sys.argv[0] etc
     # some_value = int(sys.argv[0])
@@ -63,28 +49,29 @@ def xmaslight():
     vis.add_geometry(neo_pixels)
     vis.poll_events()
 
-    # maximum parallel processes
-    iterator = range(0, 500)
-    workers = 40
-    last_time = time.time_ns()
-    while True:
-        tick(time.time_ns())
+    set_palette_mode(grb=False)
 
-        # TODO: parallel
-        # process each pixel in parallel
-        # with futures.ProcessPoolExecutor(max_workers=workers) as pool:
-        #    for i in iterator:
-        #        pool.submit(render_point, i)
+    iterator = range(0, 500)
+    ns_to_s = 1000000000
+    last_time = time.time_ns() / ns_to_s  # seconds
+    last_update = round(last_time)
+    while True:
+        tick(last_time)
+
+        # This could be done in parallel
         for i in iterator:
             worker(i)
+
         vis.update_geometry(neo_pixels)
         vis.update_renderer()
         vis.poll_events()
 
-        print(f"{60 / ((time.time_ns() - last_time) / 1000000)} FPS")
-        # lil loss here but who cares
-        last_time = time.time_ns()
-# yes, I just put this at the bottom so it auto runs
+        t = time.time_ns() / ns_to_s  # seconds
+        if last_update != round(t):
+            print(f"{round(60 / (t - last_time))} FPS")
+            last_update = round(t)
+        last_time = t
 
 
-xmaslight()
+if __name__ == '__main__':
+    xmaslight()
