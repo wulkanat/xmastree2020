@@ -1,4 +1,4 @@
-import numpy as np
+from lib import np
 
 
 def conical_gradient(p: np.array) -> np.float:

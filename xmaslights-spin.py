@@ -1,7 +1,7 @@
 # TODO: to change scene just import a different one
 from scenes.growing_sphere import render_point, tick, set_palette_mode
 
-import numpy as np
+from lib import np
 
 
 def xmaslight():

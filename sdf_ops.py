@@ -1,4 +1,4 @@
-import numpy as np
+from lib import np
 
 from sdf_primitives import euclidean_length
 

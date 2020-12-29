@@ -12,6 +12,14 @@ To render this on your local machine
 * `numpy`
 * Stuff I forgot
 
+---
+To use the accelerated GPU version (set `CUDA` to `True` in `lib.py`):
+* [cupy](https://cupy.dev/) `pip install cupy-cuda101`
+
+Seems to make little to no difference tho
+
+----
+
 Run `test_render.py`
 
 *Note: this program blocks the window close button, and I am too lazy to fix it. Know how to force close it*

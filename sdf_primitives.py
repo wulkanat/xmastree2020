@@ -1,4 +1,4 @@
-import numpy as np
+from lib import np
 
 # Most of the these functions are based on these:
 # https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
