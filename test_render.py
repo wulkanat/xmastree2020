@@ -2,17 +2,13 @@
 # THIS IS NOT REQUIRED TO RENDER, IT'S JUST A PREVIEW
 #
 
-from scenes.torus_loading2 import render_point, tick, set_palette_mode
+from scenes.growing_sphere import render_point, tick, set_palette_mode
 
 import numpy as np
 import open3d as o3d
 
 import time
 import re
-
-
-def worker(index: int):
-    np.asarray(neo_pixels.colors)[index] = render_point(neo_pixels.points[index])
 
 
 def xmaslight():
@@ -22,25 +18,29 @@ def xmaslight():
 
     # IMPORT THE COORDINATES (please don't break this bit)
 
-    coord_filename = "coords.txt"
+    # TODO: set this to true to use real light locations instead of generated cloud
+    if False:
+        coord_filename = "coords.txt"
 
-    fin = open(coord_filename, 'r')
-    coords_raw = fin.readlines()
+        fin = open(coord_filename, 'r')
+        coords_raw = fin.readlines()
 
-    coords_bits = [i.split(",") for i in coords_raw]
+        coords_bits = [i.split(",") for i in coords_raw]
 
-    coords = []
+        coords = []
 
-    for slab in coords_bits:
-        new_coord = []
-        for i in slab:
-            new_coord.append(int(re.sub(r'[^-\d]', '', i)))
-        coords.append(new_coord)
+        for slab in coords_bits:
+            new_coord = []
+            for i in slab:
+                new_coord.append(int(re.sub(r'[^-\d]', '', i)))
+            coords.append(new_coord)
+    else:
+        size = 20000
+        coords = (500*np.random.rand(size, 3)) - 250
+        print(f"min: {coords.min()}, max: {coords.max()}")
 
     # YOU CAN EDIT FROM HERE DOWN
 
-    global neo_pixels
-    global vis
     vis = o3d.visualization.Visualizer()
     # TODO: remove left to display on primary monitor
     vis.create_window(width=1280, height=720, left=3000)
@@ -52,16 +52,16 @@ def xmaslight():
 
     set_palette_mode(grb=False)
 
-    iterator = range(0, 500)
+    iterator = range(0, len(coords))
     ns_to_s = 1000000000
     last_time = time.time_ns() / ns_to_s  # seconds
     last_update = round(last_time)
     while True:
         tick(last_time)
 
-        # This could be done in parallel
-        for i in iterator:
-            worker(i)
+        # This could be done in parallel, in this case I let numpy do it all in one go
+        # so it should be pretty fast for Python standards
+        neo_pixels.colors = o3d.utility.Vector3dVector(render_point(np.asarray(neo_pixels.points)))
 
         vis.update_geometry(neo_pixels)
         vis.update_renderer()

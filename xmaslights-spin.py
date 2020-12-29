@@ -4,11 +4,6 @@ from scenes.growing_sphere import render_point, tick, set_palette_mode
 import numpy as np
 
 
-def worker(index: int):
-    # TODO: potentially conversion
-    neo_pixels[index] = render_point(points[index])
-
-
 def xmaslight():
     # This is the code from my 
 
@@ -70,8 +65,11 @@ def xmaslight():
     while True:
         tick(time.time_ns())
 
-        for i in iterator:
-            worker(i)
+        # This is an array of colors
+        colors = render_point(points)
+        # TODO: assign all colors at once, no idea how... This part is probably a big bottleneck
+        for i in range(len(colors)):
+            pixels[i] = colors[i]
         pixels.show()
 
         t = time.time_ns() / ns_to_s  # seconds

@@ -8,7 +8,7 @@ rotation = np.float(100)
 
 def tick(t: float):
     global rotation
-    rotation = 200*(1+np.sin(t))
+    rotation = (1 + np.sin(t)) % (2 * np.pi)
 
 
 # palette in RGB
@@ -17,12 +17,7 @@ green = np.array([0, 1, 0])
 blue = np.array([0, 0, 1])
 
 
-def render_point(p: np.ndarray) -> np.ndarray:
-    """
-    Render one or all points
-    :param p: array of points
-    :return: array of colors
-    """
+def render_point(p: np.array) -> np.array:
     # render a sphere with radius 100
     return colorize(red, blue, sphere(p, rotation))
 

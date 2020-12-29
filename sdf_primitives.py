@@ -31,7 +31,7 @@ def euclidean_length(vec: np.array) -> np.float:
     :param vec: vector
     :return: length
     """
-    return np.sqrt(np.sum(np.square(vec)))
+    return np.sqrt(np.sum(vec**2, axis=1))
 
 
 def sphere(p: np.array, radius: np.float) -> np.float:

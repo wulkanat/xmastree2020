@@ -156,4 +156,6 @@ def colorize(inside: np.array, outside: np.array, sdf: np.float) -> np.array:
     :param sdf: the signed distance field
     :return: color
     """
-    return inside if sdf < 0 else outside
+    val = np.moveaxis(np.array([sdf < 0]), 0, 1)
+    # if
+    return inside*val+(1-val)*outside
