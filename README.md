@@ -20,6 +20,14 @@ Seems to make little to no difference tho
 
 ----
 
+Julia Set
+
+* [numpy-quaternions](https://quaternion.readthedocs.io/en/latest/) `conda install -c conda-forge quaternion`
+* numba `pip install numba`
+* scipy `pip install scipy`
+
+---
+
 Run `test_render.py`
 
 *Note: this program blocks the window close button, and I am too lazy to fix it. Know how to force close it*

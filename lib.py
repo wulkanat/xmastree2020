@@ -1,7 +1,7 @@
 # conditional import
 
 # TODO: set to false to use numpy instead of GPU accelerated cupy
-CUDA = True
+CUDA = False
 
 if CUDA:
     import cupy as np

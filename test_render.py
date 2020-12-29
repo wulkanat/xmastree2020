@@ -2,7 +2,7 @@
 # THIS IS NOT REQUIRED TO RENDER, IT'S JUST A PREVIEW
 #
 
-from scenes.growing_sphere import render_point, tick, set_palette_mode
+from scenes.julia import render_point, tick, set_palette_mode
 
 from lib import np, CUDA
 import open3d as o3d
@@ -37,7 +37,7 @@ def xmaslight():
             coords.append(new_coord)
         coords = np.asarray(coords)
     else:
-        size = 30000
+        size = 3000
         coords = (500*np.random.rand(size, 3)) - 250
         print(f"min: {coords.min()}, max: {coords.max()}")
 

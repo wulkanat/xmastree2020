@@ -159,3 +159,16 @@ def colorize(inside: np.array, outside: np.array, sdf: np.float) -> np.array:
     val = np.moveaxis(np.array([sdf < 0]), 0, 1)
     # if
     return inside*val+(1-val)*outside
+
+
+def color_of(inside: np.array, sdf: np.array) -> np.array:
+    """
+    Colorizes an SDF
+    :param inside: color on the inside of the shape
+    :param outside: color on the outside of the shape
+    :param sdf: the signed distance field
+    :return: color
+    """
+    val = np.moveaxis(sdf, 0, 1)
+    # if
+    return inside*val
